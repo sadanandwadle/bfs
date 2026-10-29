@@ -9,13 +9,17 @@ graph = {
     'F': []
 }
 
-queue = deque(['A'])
-visited = []
+def bfs(start):
+    queue = deque([start])
+    visited = [start]
 
-while queue:
-    node = queue.popleft()
-
-    if node not in visited:
+    while queue:
+        node = queue.popleft()
         print(node, end=" ")
-        visited.append(node)
-        queue.extend(graph[node])
+
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.append(neighbor)
+                queue.append(neighbor)
+
+bfs('A')
