@@ -1,25 +1,35 @@
 from collections import deque
 
-graph = {
-    'A': ['B', 'C'],
-    'B': ['D', 'E'],
-    'C': ['F'],
-    'D': [],
-    'E': [],
-    'F': []
-}
+grid = [
+    ['S', '.', '.'],
+    ['#', '#', '.'],
+    ['.', '.', 'G']
+]
 
-def bfs(start):
-    queue = deque([start])
-    visited = [start]
+queue = deque([(0, 0)])
+visited = set()
+visited.add((0, 0))
 
-    while queue:
-        node = queue.popleft()
-        print(node, end=" ")
+moves = [(0,1), (1,0), (0,-1), (-1,0)]
 
-        for neighbor in graph[node]:
-            if neighbor not in visited:
-                visited.append(neighbor)
-                queue.append(neighbor)
+while queue:
 
-bfs('A')
+    x, y = queue.popleft()
+
+    print("Robot at:", (x, y))
+
+    if grid[x][y] == 'G':
+        print("Goal reached!")
+        break
+
+    for dx, dy in moves:
+
+        nx = x + dx
+        ny = y + dy
+
+        if (0 <= nx < 3 and 0 <= ny < 3
+            and grid[nx][ny] != '#'
+            and (nx, ny) not in visited):
+
+            visited.add((nx, ny))
+            queue.append((nx, ny))
